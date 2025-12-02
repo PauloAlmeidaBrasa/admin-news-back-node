@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("API is working 🚀");
+  return res.send("API is workinnnng 🚀");
 });
 
 // Routes
