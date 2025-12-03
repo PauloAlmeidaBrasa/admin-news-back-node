@@ -4,8 +4,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/config/server.ts",
-    "build": "tsc",
+    "dev": "tsx watch -r tsconfig-paths/register src/config/server.ts",
+    "build": "node -r tsconfig-paths/register dist/config/server.js",
     "start": "node dist/server.js",
     "knex": "knex --knexfile knexfile.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "mysql2": "^3.15.3",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^4.1.13"
   },
   "devDependencies": {
