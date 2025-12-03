@@ -3,10 +3,8 @@ import userRoutes from "../routes/user.routes"
 
 const router = Router();
 
-// router.get("/", (req, res) => {
-//   res.send("API is running 🚀");
-// });
+const API_VERSION = process.env.API_VERSION || "v1";
 
-router.use(userRoutes);
+router.use(`/${API_VERSION}`,userRoutes);
 
 export default router;
