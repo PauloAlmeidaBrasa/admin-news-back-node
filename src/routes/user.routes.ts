@@ -1,13 +1,14 @@
 import { Router } from "express";
-// import CategoryController from "./category.controller";
+import UserController from '@controllers/UserController'
+import { Request,Response } from "express";
 
 const router = Router()
 
-router.get("/", (req, res) => {
-  return res.send("USER workinnnng 🚀");
-});
+// router.get("/", (req, res) => {
+//   return res.send("USER workinnnng 🚀");
+// });
 
-// router.get("/", CategoryController.getAll);
+router.get("/", UserController.index)
 // router.get("/:id", CategoryController.getOne);
 // router.post("/", CategoryController.create);
 
