@@ -4,13 +4,16 @@ import { UserRepository } from "@repositories/UserRepository";
 import { User } from "@models/UserModel";
 
 export class UserService {
-  private userRepository = new UserRepository();
 
-  async getAllUsers() {
+  constructor(private userRepository: UserRepository) {}
+
+  // private userRepository = new UserRepository();
+
+  async getAllUsers(): Promise<User[]> {
     return this.userRepository.findAll();
   }
 
-  async getUserById(id: number) {
+  async getUserById(id: number): Promise<User> {
     const user = await this.userRepository.findById(id);
     if (!user) throw new Error("User not found");
     return user;

@@ -1,9 +1,10 @@
 // src/modules/user/user.controller.ts
 import { Request, Response } from "express";
 import { UserService } from "@services/UserService";
-import { User } from "@models/UserModel";
+import { UserRepository } from "@repositories/UserRepository";
 
-const userService = new UserService();
+const userRepository = new UserRepository();
+const userService = new UserService(userRepository);
 
 export default class UserController {
   static async index(req: Request, res: Response) {
