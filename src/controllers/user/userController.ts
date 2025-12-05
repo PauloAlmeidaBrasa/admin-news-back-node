@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 import { UserService } from "@services/UserService";
 import { UserRepository } from "@repositories/UserRepository";
 import { UserRequestHandler } from "./userRequestHandler";
-import { UserResponsetHandler } from "./userResponseHandler";
+// import { UserResponseHandler } from "./userResponseHandler";
+import { CreateUserResponse, GetUserByIdResponse } from "contracts/user/userContractsRequest";
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -22,28 +23,37 @@ export default class UserController {
 
     const requesValidate = UserRequestHandler.validateToGetById(req.params.id)
     if(requesValidate.error) {
-      UserResponsetHandler.responseGetByIdError(requesValidate.message)
+      throw new Error(`User error: ${requesValidate.message}`)
     }
     const user = await userService.getUserById(Number(req.params.id))
-    res.json(user)
+
+    const response: GetUserByIdResponse = {
+      success: true,
+      data: {
+        name: user.name,
+        email: user.email,
+        access_level: user.access_level
+      }
+    };
+
+    res.status(200).json(response)
   }
 
   static async store(req: Request, res: Response) {
 
     const requesValidate = UserRequestHandler.validateToCreate(req.body)
     if(requesValidate.error) {
-      UserResponsetHandler.responseGetByIdError(requesValidate.message)
+      throw new Error(`User error: ${requesValidate.message}`)
     }
 
     const id = await userService.createUser(req.body);
-    res.status(201).json({ id });
 
-    // try {
-    //   const id = await userService.createUser(req.body);
-    //   res.status(201).json({ id });
-    // } catch (err: any) {
-    //   res.status(400).json({ message: err.message });
-    // }
+    const response: CreateUserResponse = {
+      success: true,
+      message: `User added with id ${id}`
+    };
+
+    res.status(201).json(response);
   }
 
   // static async update(req: Request, res: Response) {

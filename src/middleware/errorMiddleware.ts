@@ -6,9 +6,25 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  console.error("🔥 Error middleware:", err);
-  
-  return res.status(err.status || 500).json({
-    message: err.message || "Internal Server Error",
+  console.error("🔥 Error caught by errorHandler:", err);
+
+  let errosCodeNotPrivate = [ //errors that should never be exposed
+    'ER_BAD_FIELD_ERROR'
+  ]
+
+  // Default values
+  const status = err.status || 500;
+  let message = err.message || "Internal Server Error";
+
+  if (errosCodeNotPrivate.includes(err.code)) {
+    message = "Internal Server Error"
+  }
+
+  return res.status(status).json({
+    success: false,
+    error: {
+      message,
+      ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+    },
   });
 }

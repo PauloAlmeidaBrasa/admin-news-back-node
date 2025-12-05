@@ -28,15 +28,15 @@ export class UserRequestHandler {
 
     return { error: false, message: ''}
   }
+
 }
 
 
+
 export interface UserReqStore {
-  // id: number;
   name: string;
   email: string;
   password: string;
-  // created_at?: Date;
 }
 
 export interface UserValidateResponse {
