@@ -2,7 +2,7 @@
 import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/UserRepository";
 import { User } from "@models/UserModel";
-import { GetByIdDTO, CreateDTO } from "contracts/user/userContractsDTO"
+import { GetByIdDTO, CreateDTO, GetAllDTO } from "contracts/user/userContractsDTO"
 import { CreateUseRequest} from "contracts/user/userContractsRequest";
 
 export class UserService {
@@ -11,8 +11,9 @@ export class UserService {
 
   // private userRepository = new UserRepository();
 
-  async getAllUsers(): Promise<User[]> {
-    return this.userRepository.findAll();
+  async getAllUsers(): Promise<GetAllDTO[]> {
+    const clientId = 1
+    return this.userRepository.findAll(clientId);
   }
 
   async getUserById(id: number): Promise<GetByIdDTO> {

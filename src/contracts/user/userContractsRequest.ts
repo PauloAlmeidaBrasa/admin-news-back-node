@@ -12,6 +12,7 @@ export interface GetUserByIdResponse {
   data: {
     name: string,
     email: string,
-    access_level: number
+    accessLevel: number,
+    clientId: number
   }
 }

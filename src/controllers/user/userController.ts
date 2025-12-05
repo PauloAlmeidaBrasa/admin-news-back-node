@@ -11,12 +11,9 @@ const userService = new UserService(userRepository);
 
 export default class UserController {
   static async index(req: Request, res: Response) {
-    try {
-      const users = await userService.getAllUsers();
-      res.json(users);
-    } catch (err: any) {
-      res.status(400).json({ message: err.message });
-    }
+
+    const users = await userService.getAllUsers();
+    res.json(users);
   }
 
   static async getById(req: Request, res: Response) {
@@ -32,7 +29,8 @@ export default class UserController {
       data: {
         name: user.name,
         email: user.email,
-        access_level: user.access_level
+        accessLevel: user.accessLevel,
+        clientId: user.clientId
       }
     };
 

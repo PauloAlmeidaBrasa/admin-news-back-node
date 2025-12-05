@@ -1,10 +1,12 @@
-import { User } from "@models/UserModel";
+// import { User } from "@contracts/user/userContractsDTO";
 import db from "@config/db"
-import { GetByIdDTO, CreateDTO } from "contracts/user/userContractsDTO";
+import { GetByIdDTO, CreateDTO, GetAllDTO } from "contracts/user/userContractsDTO";
 
 export class UserRepository {
-  async findAll(): Promise<User[]> {
-    return db<User>("users").select("*");
+  async findAll(clientId: number): Promise<GetAllDTO[]> {
+    const query = db<GetAllDTO>("users").select("*")
+
+    return query.where('client_id',clientId)
   }
 
   async findById(id: number): Promise<GetByIdDTO | undefined> {
