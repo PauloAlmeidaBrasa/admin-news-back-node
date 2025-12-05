@@ -2,6 +2,8 @@ export interface CreateUseRequest {
   name: string;
   email: string;
   password: string;
+  client_id?: number
+
 }
 export interface CreateUserResponse {
   success: boolean;

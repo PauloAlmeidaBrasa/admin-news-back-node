@@ -2,8 +2,8 @@
 import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/UserRepository";
 import { User } from "@models/UserModel";
-import { GetByIdDTO, CreateDTO, GetAllDTO } from "contracts/user/userContractsDTO"
-import { CreateUseRequest} from "contracts/user/userContractsRequest";
+import { GetByIdDTO, GetAllDTO } from "contracts/user/userContractsDTO"
+import { CreateUseRequest,} from "contracts/user/userContractsRequest";
 
 export class UserService {
 
@@ -22,15 +22,18 @@ export class UserService {
     return user;
   }
 
-  async createUser(data: CreateUseRequest): Promise<CreateDTO> {
+  async createUser(data: CreateUseRequest): Promise<number> {
     const existing = await this.userRepository.findByEmail(data.email!);
     if (existing) throw new Error("Email already exists");
+
+    data.client_id = 1
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const userData = { ...data, password: hashedPassword };
 
-    return this.userRepository.create(userData);
+    const userIdCreated = this.userRepository.create(userData);
+    return userIdCreated
   }
 
 //   async updateUser(id: number, data: Partial<User>) {

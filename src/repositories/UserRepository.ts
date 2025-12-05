@@ -10,18 +10,18 @@ export class UserRepository {
   }
 
   async findById(id: number): Promise<GetByIdDTO | undefined> {
-    return db<User>("users")
+    return db("users")
       .select("id", "name", "email", "access_level")
       .where({ id })
       .first();
   }
 
-  async create(data: Partial<User>): Promise<CreateDTO> {
-    const [user] = await db<User>("users").insert(data).returning("*");
+  async create(data: Partial<CreateDTO>): Promise<number> {
+    const [user] = await db("users").insert(data).returning("*");
     return user;
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    return db<User>("users").where({ email }).first();
+  async findByEmail(email: string): Promise<GetAllDTO | undefined> {
+    return db("users").where({ email }).first();
   }
 }

@@ -14,5 +14,7 @@ export interface GetByIdDTO {
   clientId: number
 }
 export interface CreateDTO {
-  id: number;
+  name: string;
+  email: string;
+  password: string;
 }
