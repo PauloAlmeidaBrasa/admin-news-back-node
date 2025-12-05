@@ -59,6 +59,7 @@
       "@modules/*": ["modules/*"],
       "@utils/*": ["utils/*"],
       "@controllers/*": ["controllers/*"],
+      "@routes/*": ["routes/*"],
       "@models/*": ["models/*"],
       "@services/*": ["services/*"],
       "@repositories/*": ["repositories/*"]
