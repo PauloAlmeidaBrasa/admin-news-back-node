@@ -1,27 +1,35 @@
-// import { User } from "@contracts/user/userContractsDTO";
 import db from "@config/db"
-import { GetByIdDTO, CreateDTO, GetAllDTO } from "contracts/user/userContractsDTO";
+import { GetByIdDTO, CreateDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO";
+import { BaseRepository } from "./BaseRepository";
 
-export class UserRepository {
-  async findAll(clientId: number): Promise<GetAllDTO[]> {
-    const query = db<GetAllDTO>("users").select("*")
+export class UserRepository extends BaseRepository<UserDTO>  {
 
-    return query.where('client_id',clientId)
+  constructor() {
+    super("users", db);
   }
 
-  async findById(id: number): Promise<GetByIdDTO | undefined> {
-    return db("users")
-      .select("id", "name", "email", "access_level")
-      .where({ id })
-      .first();
+  async findAllUser(clientId: number): Promise<GetAllDTO[]> {
+
+    return this.findAll(clientId)
   }
 
-  async create(data: Partial<CreateDTO>): Promise<number> {
-    const [user] = await db("users").insert(data).returning("*");
+  async findByUserId(id: number): Promise<GetByIdDTO | undefined> {
+    return this.findById(id)
+  }
+
+  async createUser(data: Partial<CreateDTO>): Promise<number> {
+    const user = this.create(data)
     return user;
   }
 
   async findByEmail(email: string): Promise<GetAllDTO | undefined> {
-    return db("users").where({ email }).first();
+    return this.db('users').where({email}).first()
+  }
+  async updateUser(id: number,data:UserDTO) {
+
+    await this.update(id,data)
+  }
+  async deleteUser(id: number) {
+    await this.delete(id);
   }
 }

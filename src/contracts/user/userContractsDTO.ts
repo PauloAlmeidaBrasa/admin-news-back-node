@@ -1,3 +1,11 @@
+export interface UserDTO {
+  id: number
+  name: string
+  email: string
+  accessLevel: number
+  clientId: number,
+  createdAt: Date
+}
 export interface GetAllDTO {
   id: number
   name: string

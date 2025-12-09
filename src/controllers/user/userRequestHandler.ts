@@ -28,6 +28,22 @@ export class UserRequestHandler {
 
     return { error: false, message: ''}
   }
+  static validateToUpdate(id: string): UserValidateResponse {
+
+    if(!id) { return { error: true, message: 'id missing'} }
+    // if(!Number(id)) { return { error: true, message: 'id bad format'} }
+
+    return { error: false, message: ''}
+
+  }
+    static validateToDelete(id: string): UserValidateResponse {
+
+    if(!id) { return { error: true, message: 'id missing'} }
+    // if(!Number(id)) { return { error: true, message: 'id bad format'} }
+
+    return { error: false, message: ''}
+
+  }
 
 }
 
