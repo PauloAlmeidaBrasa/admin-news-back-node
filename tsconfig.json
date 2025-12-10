@@ -59,9 +59,11 @@
       "@modules/*": ["modules/*"],
       "@utils/*": ["utils/*"],
       "@controllers/*": ["controllers/*"],
+      "@routes/*": ["routes/*"],
       "@models/*": ["models/*"],
       "@services/*": ["services/*"],
-      "@repositories/*": ["repositories/*"]
+      "@repositories/*": ["repositories/*"],
+      "@contracts/*": ["contracts/*"]
     },
 
     "esModuleInterop": true,
