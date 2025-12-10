@@ -1,7 +1,6 @@
 // src/modules/user/user.service.ts
 import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/UserRepository";
-import { User } from "@models/UserModel";
 import { GetByIdDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO"
 import { CreateUseRequest,} from "contracts/user/userContractsRequest";
 

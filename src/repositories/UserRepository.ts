@@ -22,7 +22,7 @@ export class UserRepository extends BaseRepository<UserDTO>  {
     return user;
   }
 
-  async findByEmail(email: string): Promise<GetAllDTO | undefined> {
+  async findByEmail(email: string): Promise<UserDTO | undefined> {
     return this.db('users').where({email}).first()
   }
   async updateUser(id: number,data:UserDTO) {
