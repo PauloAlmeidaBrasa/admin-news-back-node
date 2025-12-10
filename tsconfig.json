@@ -1,52 +1,6 @@
-// {
-//   // Visit https://aka.ms/tsconfig to read more about this file
-//   "compilerOptions": {
-//     // File Layout
-//     // "rootDir": "./src",
-//     // "outDir": "./dist",
-
-//     // Environment Settings
-//     // See also https://aka.ms/tsconfig/module
-//     "module": "nodenext",
-//     "target": "esnext",
-//     "types": [],
-//     // For nodejs:
-//     // "lib": ["esnext"],
-//     // "types": ["node"],
-//     // and npm install -D @types/node
-
-//     // Other Outputs
-//     "sourceMap": true,
-//     "declaration": true,
-//     "declarationMap": true,
-
-//     // Stricter Typechecking Options
-//     "noUncheckedIndexedAccess": true,
-//     "exactOptionalPropertyTypes": true,
-
-//     // Style Options
-//     // "noImplicitReturns": true,
-//     // "noImplicitOverride": true,
-//     // "noUnusedLocals": true,
-//     // "noUnusedParameters": true,
-//     // "noFallthroughCasesInSwitch": true,
-//     // "noPropertyAccessFromIndexSignature": true,
-
-//     // Recommended Options
-//     "strict": true,
-//     "jsx": "react-jsx",
-//     "verbatimModuleSyntax": true,
-//     "isolatedModules": true,
-//     "noUncheckedSideEffectImports": true,
-//     "moduleDetection": "force",
-//     "skipLibCheck": true,
-//   }
-// }
 
 {
-
-
-    "compilerOptions": {
+  "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
 
@@ -65,28 +19,9 @@
       "@repositories/*": ["repositories/*"],
       "@contracts/*": ["contracts/*"]
     },
-
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    // "typeRoots": ["./src/contracts", "./node_modules/@types"]
   },
   "include": ["src"]
-
-  // "compilerOptions": {
-  //   "target": "ES2020",
-  //   "module": "ESNext",
-  //   "moduleResolution": "Node",
-  //   "esModuleInterop": true,
-  //   "outDir": "./dist",
-  //   "rootDir": "./src",
-  //   "baseUrl": ".",
-  //   "strict": true,
-  //   "resolveJsonModule": true
-  // },
-  // "include": ["src"],
-  // "paths": {
-  //   "@modules/*": ["modules/*"],
-  //   // "@services/*": ["services/*"],
-  //   "@config/*": ["config/*"]
-  // },
-
 }
