@@ -44,6 +44,8 @@ export default class UserController {
       throw new Error(`User error: ${requesValidate.message}`)
     }
 
+    req.body.client_id = req.user.client_id
+
     const id = await userService.createUser(req.body);
 
     const response: CreateUserResponse = {
