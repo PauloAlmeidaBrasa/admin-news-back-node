@@ -2,10 +2,10 @@ export interface UserDTO {
   id: number
   name: string
   email: string
-  accessLevel: number
-  clientId: number,
-  createdAt: Date,
-  password: string
+  accessLevel?: number
+  client_id: number,
+  createdAt?: Date,
+  password?: string
 }
 export interface GetAllDTO {
   id: number

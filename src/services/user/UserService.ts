@@ -10,9 +10,9 @@ export class UserService {
 
   // private userRepository = new UserRepository();
 
-  async findAll(): Promise<GetAllDTO[]> {
-    const clientId = 1
-    return this.userRepository.findAllUser(clientId);
+  async findAll(clientId:number): Promise<GetAllDTO[]> {
+    const client_id = clientId
+    return this.userRepository.findAllUser(client_id);
   }
 
   async getUserById(id: number): Promise<GetByIdDTO> {

@@ -1,4 +1,3 @@
-// modules/auth/login.service.ts
 import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/UserRepository";
 import { signJwt } from "@utils/jwt";
@@ -9,10 +8,9 @@ export class AuthenticationService  {
   constructor(private userRepository: UserRepository) {  }
 
     
-  async authentication(payload:JwtUserPayload):Promise<JwtUserResponse> {
+  async authentication(payload:JwtUserPayload): Promise<JwtUserResponse> {
 
     const user = await this.userRepository.findByEmail(payload.email)
-
     
     if (!user)
     {
@@ -31,8 +29,10 @@ export class AuthenticationService  {
     }
 
     const token = signJwt({
-      email: user.email,
-      password: payload.password
+      id: user.id,
+      name: user.name,
+      client_id: user.client_id,
+      email: user.email
     });
 
     return {
@@ -45,27 +45,6 @@ export class AuthenticationService  {
     };
   }
 
-
-
-    // if (!user) console.log('ERRORR')
-
-
-  //   const passwordMatch = await bcrypt.compare(password, user.password);
-  //   if (!passwordMatch) throw new Error("Invalid credentials");
-
-  //   const token = signJwt({
-  //     email: user.email,
-  //     password: password
-  //   });
-
-  //   return {
-  //     access_token: token,
-  //     user: {
-  //       id: user.id,
-  //       email: user.email,
-  //     }
-  //   };
-  // }
 }
 
 // export const authService = new AuthenticationService(UserRepository);
