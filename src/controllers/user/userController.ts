@@ -12,7 +12,7 @@ const userService = new UserService(userRepository);
 export default class UserController {
   static async index(req: Request, res: Response) {
 
-    const users = await userService.findAll();
+    const users = await userService.findAll(req.user.client_id);
     res.json(users);
   }
 
@@ -43,6 +43,8 @@ export default class UserController {
     if(requesValidate.error) {
       throw new Error(`User error: ${requesValidate.message}`)
     }
+
+    req.body.client_id = req.user.client_id
 
     const id = await userService.createUser(req.body);
 
