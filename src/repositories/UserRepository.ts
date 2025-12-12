@@ -1,4 +1,4 @@
-import db from "@config/db"
+import db from "@config/db/db"
 import { GetByIdDTO, CreateDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO";
 import { BaseRepository } from "./BaseRepository";
 
