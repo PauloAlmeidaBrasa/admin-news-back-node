@@ -12,6 +12,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('remember_token').nullable()
     table.timestamp("created_at").defaultTo(knex.fn.now());
     table.timestamp("updated_at").defaultTo(knex.fn.now());
+    table.integer('access_level').notNullable()
 
     table
       .integer("client_id")
@@ -25,5 +26,5 @@ export async function up(knex: Knex): Promise<void> {
 
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable("users");
+  return knex.schema.dropTableIfExists("users");
 }

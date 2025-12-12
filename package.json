@@ -10,7 +10,9 @@
     "knex": "knex --knexfile ./src/config/db/knexfile.ts",
     "migrate:make": "knex migrate:make --knexfile ./src/config/db/knexfile.ts",
     "migrate:latest": "knex migrate:latest --knexfile ./src/config/db/knexfile.ts",
-    "migrate:rollback": "knex migrate:rollback --knexfile ./src/config/db/knexfile.ts"
+    "migrate:rollback": "knex migrate:rollback --knexfile ./src/config/db/knexfile.ts",
+    "seed:run": "knex seed:run --knexfile ./src/config/db/knexfile.ts",
+    "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile.ts"
   },
   "keywords": [],
   "author": "",
