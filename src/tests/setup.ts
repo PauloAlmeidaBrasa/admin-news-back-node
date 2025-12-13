@@ -1,6 +1,5 @@
 import knex from "knex"
 import knexConfig from "../config/db/knexfile.test"
-import jwt from "jsonwebtoken"
 import request from "supertest"
 import app from "../app"
 import { Test } from "supertest";
@@ -18,10 +17,12 @@ beforeAll(async () => {
   .post("/v1/authentication")
   .send({ email: "paulo@eexample.com", password: "123456" })
 
+  const userId = loginRes.body.user.id;
   const token = loginRes.body.access_token;
 
 
-  (global as any).authToken = token
+  (global as any).authToken = token;
+  (global as any).userId = userId
 })
 
 afterAll(async () => {

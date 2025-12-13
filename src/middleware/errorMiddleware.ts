@@ -12,7 +12,8 @@ export function errorHandler(
     'ER_BAD_FIELD_ERROR',
     'ERR_ASSERTION',
     'REPOSITORY_ERROR',
-    'ER_NO_TABLES_USED'
+    'ER_NO_TABLES_USED',
+    'ER_NO_DEFAULT_FOR_FIELD'
   ]
 
   // Default values

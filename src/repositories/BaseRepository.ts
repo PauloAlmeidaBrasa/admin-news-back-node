@@ -55,6 +55,17 @@ export abstract class BaseRepository<T> {
 
   async delete(id: number): Promise<void> {
     try {
+     
+      let user = await this.findById(id);
+      if (!user) {
+
+        const customError: any = new Error(`Record not found for ID=${id}`);
+        customError.message = customError.message;
+        customError.status = 404;
+        customError.code = 'USERNOTFOUND';
+
+        throw customError;
+      }
       await this.db(this.tableName).where({ id }).delete();
     } catch (error) {
       throw this.handleError(error, "delete");
