@@ -39,10 +39,16 @@ export abstract class BaseRepository<T> {
      
       let updated = await this.findById(id);
       if (!updated) {
-        throw new Error(`Record not found for ID=${id}`);
+
+        const customError: any = new Error(`Record not found for ID=${id}`);
+        customError.message = customError.message;
+        customError.status = 404;
+        customError.code = 'USERNOTFOUND';
+
+        throw customError;
       }
       return updated;
-    } catch (error) {
+    } catch (error: any) {
       throw this.handleError(error, "update");
     }
   }
@@ -59,8 +65,10 @@ export abstract class BaseRepository<T> {
     console.error(`[Repository Error] ${this.tableName}.${action}:`, error);
 
     const customError: any = new Error(`Failed to ${action}`);
-    customError.code = 'REPOSITORY_ERROR'
-    customError.status = 500;
+    customError.code = error.code || "REPOSITORY_ERROR";
+    customError.status = error.status || 500;
+    customError.message = error.message;
+
 
     throw customError;
   }

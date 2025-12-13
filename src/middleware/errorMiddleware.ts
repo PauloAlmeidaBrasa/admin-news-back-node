@@ -19,7 +19,6 @@ export function errorHandler(
   const status = err.status || 500;
   let message = err.message || "Internal Server Error";
 
-  console.log(err)
   if (errosCodePrivate.includes(err.code)) {
     message = "Internal Server Error"
   }
