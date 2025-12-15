@@ -2,16 +2,20 @@ import express from "express";
 import routes from "./routes";
 import { errorHandler } from "./middleware/errorMiddleware"
 import { corsMiddleware } from "./middleware/corsMiddleware";
+import registerRouter from "@routes/index";
+import { Knex } from "knex";
 
 
-// import categoryRoutes from "./modules/category/category.routes";
+const createApp = (db: Knex) => {
+  const app = express();
 
-const app = express();
+  app.use(express.json());
+  app.use(corsMiddleware);
+  app.use(registerRouter(db))
+  app.use(errorHandler)
 
-app.use(express.json());
-app.use(corsMiddleware);
-app.use(routes)
-app.use(errorHandler)
+  return app
+}
 
 
-export default app;
+export default createApp;

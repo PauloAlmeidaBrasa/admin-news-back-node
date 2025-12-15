@@ -5,7 +5,13 @@ import { JwtUserPayload, JwtUserResponse } from "@contracts/jwt";
 
 export class AuthenticationService  {
 
-  constructor(private userRepository: UserRepository) {  }
+  // constructor(private userRepository: UserRepository) {  }
+
+  private userRepository: UserRepository
+
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository
+  }
 
     
   async authentication(payload:JwtUserPayload): Promise<JwtUserResponse> {

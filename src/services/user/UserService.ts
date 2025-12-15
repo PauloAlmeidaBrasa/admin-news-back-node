@@ -3,12 +3,17 @@ import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/UserRepository";
 import { GetByIdDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO"
 import { CreateUseRequest,} from "contracts/user/userContractsRequest";
+import { Knex } from "knex";
+
 
 export class UserService {
 
-  constructor(private userRepository: UserRepository) {}
+  private userRepository: UserRepository;
 
-  // private userRepository = new UserRepository();
+  constructor(db: Knex, userRepository: UserRepository) {
+    this.userRepository = new UserRepository(db)
+  }
+
 
   async findAll(clientId:number): Promise<GetAllDTO[]> {
     const client_id = clientId

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch -r tsconfig-paths/register src/config/server.ts",
+    "dev": "NODE_ENV=dev tsx watch -r tsconfig-paths/register src/config/server.ts",
     "build": "node -r tsconfig-paths/register dist/config/server.js",
     "start": "node dist/server.js",
     "knex": "knex --knexfile ./src/config/db/knexfile.ts",
@@ -12,7 +12,7 @@
     "migrate:rollback": "knex migrate:rollback --knexfile ./src/config/db/knexfile.ts",
     "seed:run": "knex seed:run --knexfile ./src/config/db/knexfile.ts",
     "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile.ts",
-    "test": "jest",
+    "test": "NODE_ENV=test jest --setupFiles ./src/tests/jest.env.ts",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage"
   },
@@ -58,6 +58,7 @@
       "**/src/tests/**/*.spec.ts"
     ],
     "modulePaths": ["<rootDir>/src"],
+    "setupFiles": ["<rootDir>/src/tests/jest.env.ts"],
     "setupFilesAfterEnv": ["<rootDir>/src/tests/setup.ts"],
     "clearMocks": true,
     "moduleNameMapper": {
