@@ -1,4 +1,4 @@
-import createApp from "../app"
+import { createApp } from "../app"
 import "dotenv/config"
 import db from "./db/db"
 

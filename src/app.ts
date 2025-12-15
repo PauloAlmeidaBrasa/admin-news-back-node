@@ -1,12 +1,11 @@
 import express from "express";
-import routes from "./routes";
 import { errorHandler } from "./middleware/errorMiddleware"
 import { corsMiddleware } from "./middleware/corsMiddleware";
 import registerRouter from "@routes/index";
 import { Knex } from "knex";
 
 
-const createApp = (db: Knex) => {
+export const createApp = (db: Knex) => {
   const app = express();
 
   app.use(express.json());
@@ -16,6 +15,3 @@ const createApp = (db: Knex) => {
 
   return app
 }
-
-
-export default createApp;

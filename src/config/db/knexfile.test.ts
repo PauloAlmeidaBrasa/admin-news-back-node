@@ -2,7 +2,7 @@
 import dotenv from "dotenv";
 dotenv.config({path:'.env.test'});
 
-const knexConfig = {
+const knexTestConfig = {
   client: "mysql2",
   connection: {
     host: "db",
@@ -22,4 +22,4 @@ const knexConfig = {
   },
 };
 
-export default knexConfig;
+export default knexTestConfig;

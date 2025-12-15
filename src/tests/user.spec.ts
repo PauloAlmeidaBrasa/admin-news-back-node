@@ -1,6 +1,7 @@
 import request from "supertest"
-import app from "../app"
-import { auth } from "./setup";
+import { app, db } from "./setup";
+import { auth } from "./helpers/auth";
+import { createTestUser } from "./helpers/testUser";
 
 const apiVersion = process.env.API_VERSION
 
@@ -40,7 +41,7 @@ describe("PATCH /v1/user/update/:id", () => {
     const userId = (global as any).userId;
 
     const updatePayload = {
-      name: "Paul Updated",
+      name: "Paul Updated7",
     };
 
     const updateRes = await auth(
@@ -65,7 +66,7 @@ describe("PATCH /v1/user/update/:id", () => {
       expect.objectContaining({
         success: true,
         data: expect.objectContaining({
-          name: "Paul Updated",
+          name: "Paul Updated7",
         }),
       })
     );
@@ -74,17 +75,20 @@ describe("PATCH /v1/user/update/:id", () => {
 
 describe("POST /v1/user/delete/:id", () => {
   it("should delete the user successfully", async () => {
-    const userId = (global as any).userId;
+    const user = await createTestUser(db);
 
-    const deleteRes = await auth(
-      request(app).post(`/${apiVersion}/user/delete/4`)
-    )
+    const res = await auth(
+      request(app).post(`/v1/user/delete/${user.id}`)
+    );
 
-    expect(deleteRes.status).toBe(200);
-    expect(deleteRes.body).toEqual(
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(
       expect.objectContaining({
         message: "Deleted successfully",
       })
     );
+
+    const deletedUser = await db("users").where({ id: user.id }).first();
+    expect(deletedUser).toBeUndefined();
   });
 });
