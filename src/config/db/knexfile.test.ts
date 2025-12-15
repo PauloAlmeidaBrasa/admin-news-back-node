@@ -1,0 +1,25 @@
+
+import dotenv from "dotenv";
+dotenv.config({path:'.env.test'});
+
+const knexTestConfig = {
+  client: "mysql2",
+  connection: {
+    host: "db",
+    port: 3306,
+    user: "root",
+    password: "root",
+    database: "news_back_test_db",
+  },
+  pool: { min: 2, max: 10 },
+  migrations: {
+    tableName: "knex_migrations",
+    directory: "./src/config/db/migrations",
+    extension: "ts",
+  },
+  seeds: {
+    directory: "./src/config/db/seeds",
+  },
+};
+
+export default knexTestConfig;

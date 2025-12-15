@@ -1,10 +1,10 @@
-import db from "@config/db/db"
 import { GetByIdDTO, CreateDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO";
 import { BaseRepository } from "./BaseRepository";
+import { Knex } from "knex";
 
 export class UserRepository extends BaseRepository<UserDTO>  {
 
-  constructor() {
+  constructor(db: Knex) {
     super("users", db);
   }
 

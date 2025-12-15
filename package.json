@@ -3,16 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch -r tsconfig-paths/register src/config/server.ts",
+    "dev": "NODE_ENV=dev tsx watch -r tsconfig-paths/register src/config/server.ts",
     "build": "node -r tsconfig-paths/register dist/config/server.js",
     "start": "node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "knex": "knex --knexfile ./src/config/db/knexfile.ts",
     "migrate:make": "knex migrate:make --knexfile ./src/config/db/knexfile.ts",
     "migrate:latest": "knex migrate:latest --knexfile ./src/config/db/knexfile.ts",
     "migrate:rollback": "knex migrate:rollback --knexfile ./src/config/db/knexfile.ts",
     "seed:run": "knex seed:run --knexfile ./src/config/db/knexfile.ts",
-    "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile.ts"
+    "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile.ts",
+    "test": "NODE_ENV=test jest --setupFiles ./src/tests/jest.env.ts",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -35,12 +37,37 @@
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.10.1",
+    "@types/supertest": "^6.0.3",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tslib": "^2.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/src/tests/**/*.test.ts",
+      "**/src/tests/**/*.spec.ts"
+    ],
+    "modulePaths": ["<rootDir>/src"],
+    "setupFiles": ["<rootDir>/src/tests/jest.env.ts"],
+    "setupFilesAfterEnv": ["<rootDir>/src/tests/setup.ts"],
+    "clearMocks": true,
+    "moduleNameMapper": {
+      "^@routes/(.*)$": "<rootDir>/src/routes/$1",
+      "^@controllers/(.*)$": "<rootDir>/src/controllers/$1",
+      "^@utils/(.*)$": "<rootDir>/src/utils/$1",
+      "^@config/(.*)$": "<rootDir>/src/config/$1",
+      "^@services/(.*)$": "<rootDir>/src/services/$1",
+      "^@repositories/(.*)$": "<rootDir>/src/repositories/$1"
+    }
   }
 }
