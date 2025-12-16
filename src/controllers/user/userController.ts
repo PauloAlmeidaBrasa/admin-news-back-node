@@ -17,12 +17,58 @@ export default class UserController {
     this.userService = new UserService(db,userRepository);
   }
 
+  /**
+ * @openapi
+ * /user/:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: List users
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *     responses:
+ *       200:
+ *         description: All users 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserAll'
+ *       500:
+ *         description: Internal server error
+ */
+
   index = async (req: Request, res: Response) => {
 
     const users = await this.userService.findAll(req.user.client_id);
     res.json(users);
   }
 
+/**
+ * @openapi
+ * /user/{id}:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Get user by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserById'
+ *       404:
+ *         description: User not found
+ */
   getById = async (req: Request, res: Response) => {
 
     const requesValidate = UserRequestHandler.validateToGetById(req.params.id)
@@ -44,6 +90,37 @@ export default class UserController {
     res.status(200).json(response)
   }
 
+/**
+ * @openapi
+ * /user/create:
+ *   post:
+ *     tags:
+ *       - User
+ *     summary: Create user
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserCreate'
+ *     responses:
+ *       201:
+ *         description: User created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ */
+
   store = async (req: Request, res: Response) => {
 
     const requesValidate = UserRequestHandler.validateToCreate(req.body)
@@ -63,6 +140,34 @@ export default class UserController {
     res.status(201).json(response);
   }
 
+  
+/**
+ * @openapi
+ * /user/update/{id}:
+ *   patch:
+ *     tags:
+ *       - User
+ *     summary: Update user data
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserUpdate'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
   update = async (req: Request, res: Response) => {
 
     const requesValidate = UserRequestHandler.validateToUpdate(req.params.id)
@@ -76,6 +181,35 @@ export default class UserController {
     await this.userService.update(userId,fieldsUpdate);
     res.json({ message: "Updated successfully" });
   }
+
+    
+/**
+ * @openapi
+ * /user/delete/{id}:
+ *   post:
+ *     tags:
+ *       - User
+ *     summary: Delete User
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DeleteUser'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 
   delete = async (req: Request, res: Response) => {
     try {
