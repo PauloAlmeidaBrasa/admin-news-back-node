@@ -101,8 +101,6 @@ definitions:
       environment:
         MYSQL_DATABASE: news_back_test_db
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
 
 caches:
   node: ~/.npm
