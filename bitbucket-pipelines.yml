@@ -10,6 +10,8 @@ pipelines:
     '**':
       - step:
           name: CI – Test & Build
+          services:
+            - mysql
           caches:
             - node
           script:
@@ -96,3 +98,11 @@ definitions:
 
 caches:
   node: ~/.npm
+
+mysql:
+  image: mysql:8.0
+  environment:
+    MYSQL_DATABASE: news_back_test_db
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_USER: root
+    MYSQL_PASSWORD: root
