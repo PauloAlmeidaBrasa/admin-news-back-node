@@ -15,6 +15,7 @@ pipelines:
           caches:
             - node
           script:
+            - cp .env.test .env
             - npm i
             - npm ci
             # - npm run lint
