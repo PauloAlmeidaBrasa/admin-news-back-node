@@ -4,6 +4,7 @@ import { corsMiddleware } from "./middleware/corsMiddleware";
 import registerRouter from "@routes/index";
 import { Knex } from "knex";
 
+console.log('jj')
 
 export const createApp = (db: Knex) => {
   const app = express();
