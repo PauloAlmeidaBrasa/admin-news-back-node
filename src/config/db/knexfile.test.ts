@@ -5,7 +5,7 @@
 const knexTestConfig = {
   client: "mysql2",
   connection: {
-    host: "db",
+    host: "mysql",
     port: 3306,
     user: "root",
     password: "root",
