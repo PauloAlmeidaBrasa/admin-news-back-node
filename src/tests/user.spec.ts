@@ -10,6 +10,7 @@ describe('GET user/', () => {
     const res = await auth(
       request(app).get("/v1/user")
     );
+    console.log("  RES ==>  ", res)
     return expect(Array.isArray(res.body)).toBe(true)
   });
 });
