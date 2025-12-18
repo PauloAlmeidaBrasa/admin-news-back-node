@@ -11,11 +11,11 @@ pipelines:
       - step:
           name: CI – Test & Build
           services:
-            - db
+            - mysql
           caches:
             - node
           script:
-            - cp .env.test .env
+            - cp .env.tests-pipeline .env
             - npm i
             - npm ci
             # - npm run lint
@@ -96,7 +96,7 @@ definitions:
   services:
     docker:
       memory: 3072
-    db:
+    mysql:
       image: mysql:8.0
       environment:
         MYSQL_DATABASE: news_back_test_db
