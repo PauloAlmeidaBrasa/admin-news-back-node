@@ -11,7 +11,7 @@ pipelines:
       - step:
           name: CI – Test & Build
           services:
-            - mysql
+            - db
           caches:
             - node
           script:
