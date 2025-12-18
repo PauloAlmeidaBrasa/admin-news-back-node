@@ -8,6 +8,9 @@ import { Knex } from "knex";
 export const createApp = (db: Knex) => {
   const app = express();
 
+  console.log("🧪 DB IN APPLICATION:", db);
+
+
   app.use(express.json());
   app.use(corsMiddleware);
   app.use(registerRouter(db))

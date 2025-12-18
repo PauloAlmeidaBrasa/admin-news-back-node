@@ -96,7 +96,7 @@ definitions:
   services:
     docker:
       memory: 3072
-    mysql:
+    db:
       image: mysql:8.0
       environment:
         MYSQL_DATABASE: news_back_test_db
