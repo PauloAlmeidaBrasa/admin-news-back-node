@@ -1,6 +1,6 @@
 
-import dotenv from "dotenv";
-dotenv.config({path:'.env.test'});
+// import dotenv from "dotenv";
+// dotenv.config({path:'.env.test'});
 
 const knexTestConfig = {
   client: "mysql2",
