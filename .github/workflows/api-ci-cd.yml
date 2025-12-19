@@ -9,8 +9,6 @@ on:
   push:
     branches:
       - staging
-
-  push:
     tags:
       - 'v*'
 
