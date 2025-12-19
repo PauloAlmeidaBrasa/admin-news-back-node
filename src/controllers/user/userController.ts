@@ -4,25 +4,78 @@ import { UserService } from "@services/user/UserService";
 import { UserRepository } from "@repositories/UserRepository";
 import { UserRequestHandler } from "./userRequestHandler";
 // import { UserResponseHandler } from "./userResponseHandler";
-import { CreateUserResponse, GetUserByIdResponse } from "contracts/user/userContractsRequest";
+import { CreateUserResponse, GetUserByIdResponse } from "contracts/user/userContractsRequest"
+import { Knex } from "knex";
 
-const userRepository = new UserRepository();
-const userService = new UserService(userRepository);
+
 
 export default class UserController {
-  static async index(req: Request, res: Response) {
+  private userService: UserService;
+  
+  constructor(db: Knex) {
+    const userRepository = new UserRepository(db);
+    this.userService = new UserService(db,userRepository);
+  }
 
-    const users = await userService.findAll(req.user.client_id);
+  /**
+ * @openapi
+ * /user/:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: List users
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *     responses:
+ *       200:
+ *         description: All users 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserAll'
+ *       500:
+ *         description: Internal server error
+ */
+
+  index = async (req: Request, res: Response) => {
+
+    const users = await this.userService.findAll(req.user.client_id);
     res.json(users);
   }
 
-  static async getById(req: Request, res: Response) {
+/**
+ * @openapi
+ * /user/{id}:
+ *   get:
+ *     tags:
+ *       - User
+ *     summary: Get user by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserById'
+ *       404:
+ *         description: User not found
+ */
+  getById = async (req: Request, res: Response) => {
 
     const requesValidate = UserRequestHandler.validateToGetById(req.params.id)
     if(requesValidate.error) {
       throw new Error(`User error: ${requesValidate.message}`)
     }
-    const user = await userService.getUserById(Number(req.params.id))
+    const user = await this.userService.getUserById(Number(req.params.id))
 
     const response: GetUserByIdResponse = {
       success: true,
@@ -37,7 +90,38 @@ export default class UserController {
     res.status(200).json(response)
   }
 
-  static async store(req: Request, res: Response) {
+/**
+ * @openapi
+ * /user/create:
+ *   post:
+ *     tags:
+ *       - User
+ *     summary: Create user
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserCreate'
+ *     responses:
+ *       201:
+ *         description: User created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ */
+
+  store = async (req: Request, res: Response) => {
 
     const requesValidate = UserRequestHandler.validateToCreate(req.body)
     if(requesValidate.error) {
@@ -46,7 +130,7 @@ export default class UserController {
 
     req.body.client_id = req.user.client_id
 
-    const id = await userService.createUser(req.body);
+    const id = await this.userService.createUser(req.body);
 
     const response: CreateUserResponse = {
       success: true,
@@ -56,7 +140,35 @@ export default class UserController {
     res.status(201).json(response);
   }
 
-  static async update(req: Request, res: Response) {
+  
+/**
+ * @openapi
+ * /user/update/{id}:
+ *   patch:
+ *     tags:
+ *       - User
+ *     summary: Update user data
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserUpdate'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+  update = async (req: Request, res: Response) => {
 
     const requesValidate = UserRequestHandler.validateToUpdate(req.params.id)
     if(requesValidate.error) {
@@ -66,17 +178,46 @@ export default class UserController {
     const userId = Number(req.params.id)
     const fieldsUpdate = req.body
 
-    await userService.update(userId,fieldsUpdate);
+    await this.userService.update(userId,fieldsUpdate);
     res.json({ message: "Updated successfully" });
   }
 
-  static async delete(req: Request, res: Response) {
+    
+/**
+ * @openapi
+ * /user/delete/{id}:
+ *   post:
+ *     tags:
+ *       - User
+ *     summary: Delete User
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DeleteUser'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+
+  delete = async (req: Request, res: Response) => {
     try {
       const requesValidate = UserRequestHandler.validateToDelete(req.params.id)
       if(requesValidate.error) {
         throw new Error(`User error: ${requesValidate.message}`)
       }
-      await userService.deleteUser(Number(req.params.id));
+      await this.userService.deleteUser(Number(req.params.id));
       res.json({ message: "Deleted successfully" });
     } catch (err: any) {
       res.status(400).json({ message: err.message });

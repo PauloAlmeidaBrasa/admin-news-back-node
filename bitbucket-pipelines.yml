@@ -1,0 +1,107 @@
+image: node:18
+
+options:
+  docker: true
+  size: 2x
+
+pipelines:
+
+  pull-requests:
+    '**':
+      - step:
+          name: CI – Test & Build
+          services:
+            - db
+          caches:
+            - node
+          script:
+            - cp .env.tests-pipeline .env
+            - npm i
+            - npm ci
+            # - npm run lint
+            - npm run test
+            - npm run build
+
+  branches:
+
+    staging:
+      - step:
+          name: Build & Test (STAGING)
+          services:
+            - docker
+          caches:
+            - node
+          script:
+            - npm ci
+            - npm test
+            - npm run build
+            - docker build -t my-api:staging .
+
+      - step:
+          name: Deploy to STAGING
+          deployment: staging
+          script:
+            - pipe: atlassian/ssh-run:0.6.1
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $SERVER_IP
+                COMMAND: |
+                  cd $APP_PATH/staging
+                  docker compose pull
+                  docker compose up -d
+
+    master:
+      - step:
+          name: Build & Test (MASTER)
+          services:
+            - docker
+          caches:
+            - node
+          script:
+            - npm ci
+            - npm test
+            - npm run build
+            - docker build -t my-api:latest .
+  
+  tags:
+    'v*':
+      - step:
+          name: Build & Test (PROD TAG)
+          services:
+            - docker
+          caches:
+            - node
+          script:
+            - npm ci
+            - npm test
+            - npm run build
+            - docker build -t my-api:${BITBUCKET_TAG} .
+
+      - step:
+          name: Deploy to PRODUCTION
+          deployment: production
+          script:
+            - pipe: atlassian/ssh-run:0.6.1
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $SERVER_IP
+                COMMAND: |
+                  cd $APP_PATH/prod
+                  docker compose pull
+                  docker compose up -d
+
+
+
+definitions:
+  services:
+    docker:
+      memory: 3072
+    db:
+      image: mysql:8.0
+      environment:
+        MYSQL_DATABASE: news_back_test_db
+        MYSQL_ROOT_PASSWORD: root
+
+caches:
+  node: ~/.npm
+

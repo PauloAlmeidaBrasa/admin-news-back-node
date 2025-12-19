@@ -1,8 +1,14 @@
-import { Router } from "express";
-import AuthenticationController from "@controllers/auth/authenticationController";
+import { Router } from "express"
+import AuthenticationController from "@controllers/auth/authenticationController"
+import { Knex } from "knex"
 
-const router = Router()
+const authenticationRoutes = (db: Knex) => {
+  const router = Router()
+  const controller = new AuthenticationController(db)
 
-router.post("/authentication", AuthenticationController.auth)
+  router.post("/authentication", controller.auth)
 
-export default router;
+  return router
+}
+
+export default authenticationRoutes

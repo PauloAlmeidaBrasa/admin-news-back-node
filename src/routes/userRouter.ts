@@ -1,12 +1,20 @@
 import { Router } from "express";
 import UserController from '@controllers/user/userController'
+import { Knex } from "knex";
 
-const router = Router()
 
-router.get("/user", UserController.index)
-router.get("/user/:id", UserController.getById);
-router.post("/user/create", UserController.store)
-router.patch("/user/update/:id", UserController.update)
-router.post("/user/delete/:id", UserController.delete)
 
-export default router;
+const userRoutes = (db: Knex) => {
+  const router = Router();
+  const controller = new UserController(db);
+
+  router.get("/user", controller.index)
+  router.get("/user/:id", controller.getById);
+  router.post("/user/create", controller.store)
+  router.patch("/user/update/:id", controller.update)
+  router.post("/user/delete/:id", controller.delete)
+
+  return router;
+};
+
+export default userRoutes;
