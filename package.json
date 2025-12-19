@@ -14,7 +14,8 @@
     "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile.ts",
     "test": "NODE_ENV=test jest --setupFiles ./src/tests/jest.env.ts",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "test:ci": "NODE_ENV=test dotenv -e .env.tests-pipeline -- jest --runInBand"
   },
   "keywords": [],
   "author": "",
