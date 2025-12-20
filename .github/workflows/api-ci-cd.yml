@@ -50,6 +50,13 @@ jobs:
       # - name: Prepare env
       #   run: cp .env.test .env
 
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h db -uroot -proot --silent; do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+
       - name: Run tests
         run: npm run test:ci
 
