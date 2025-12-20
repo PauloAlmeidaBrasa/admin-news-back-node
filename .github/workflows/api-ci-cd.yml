@@ -52,10 +52,10 @@ jobs:
 
       - name: Wait for MySQL
         run: |
-          until mysqladmin ping -h db -uroot -proot --silent; do
-            echo "Waiting for MySQL..."
-            sleep 2
-          done
+          until mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; do
+                echo "Waiting for MySQL..."
+                sleep 2
+              done
 
       - name: Run tests
         run: npm run test:ci
