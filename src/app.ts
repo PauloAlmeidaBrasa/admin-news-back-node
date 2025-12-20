@@ -5,10 +5,10 @@ import registerRouter from "@routes/index";
 import { Knex } from "knex";
 
 
+console.log('hdb')
+
 export const createApp = (db: Knex) => {
   const app = express();
-
-  console.log("🧪 DB IN APPLICATION:", db);
 
 
   app.use(express.json());

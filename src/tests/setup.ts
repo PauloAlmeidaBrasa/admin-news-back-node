@@ -6,7 +6,7 @@ import { createTestUser, deleteTestUser } from "./helpers/testUser";
 
 
 export const db = knex(knexTestConfig);
-console.log("🧪 SHOWING DB:", db);
+// console.log("🧪 SHOWING DB:", db);
 export const app = createApp(db);
 
 let testUserId: number;
