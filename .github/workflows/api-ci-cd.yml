@@ -9,8 +9,6 @@ on:
   push:
     branches:
       - staging
-
-  push:
     tags:
       - 'v*'
 
@@ -24,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
+      db:
         image: mysql:8.0
         env:
           MYSQL_DATABASE: news_back_test_db
@@ -49,11 +47,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Prepare env
-        run: cp .env.test .env
+      # - name: Prepare env
+      #   run: cp .env.test .env
+
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h db -uroot -proot --silent; do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:ci
 
       - name: Build
         run: npm run build
@@ -88,6 +93,9 @@ jobs:
         with:
           node-version: 18
           cache: npm
+      
+      - name: NPM Install
+        run: npm i
 
       - name: Install dependencies
         run: npm ci
