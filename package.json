@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev tsx watch -r tsconfig-paths/register src/config/server.ts",
-    "build": "node -r tsconfig-paths/register dist/config/server.js",
+    "build": "tsc",
     "start": "node dist/server.js",
     "knex": "knex --knexfile ./src/config/db/knexfile.ts",
     "migrate:make": "knex migrate:make --knexfile ./src/config/db/knexfile.ts",
@@ -14,7 +14,8 @@
     "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile.ts",
     "test": "NODE_ENV=test jest --setupFiles ./src/tests/jest.env.ts",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "test:ci": "NODE_ENV=test jest --setupFiles ./src/tests/jest.env-ci.ts --runInBand"
   },
   "keywords": [],
   "author": "",
