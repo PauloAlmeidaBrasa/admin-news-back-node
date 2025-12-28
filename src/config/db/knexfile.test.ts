@@ -10,6 +10,7 @@ const knexTestConfig = {
     user: "root",
     password: "root",
     database: "news_back_test_db",
+    connectTimeout: 5000
   },
   pool: { min: 2, max: 10 },
   migrations: {

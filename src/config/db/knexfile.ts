@@ -12,6 +12,7 @@ const knexConfig: Knex.Config = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     port: Number(process.env.DB_PORT) || 3306,
+    connectTimeout: 5000
   },
   migrations: {
     directory: "./migrations",
