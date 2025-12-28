@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev tsx watch -r tsconfig-paths/register src/config/server.ts",
+    "staging": "NODE_ENV=staging tsx watch -r tsconfig-paths/register src/config/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "knex": "knex --knexfile ./src/config/db/knexfile.ts",
