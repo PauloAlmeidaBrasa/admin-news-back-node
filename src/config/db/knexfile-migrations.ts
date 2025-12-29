@@ -4,6 +4,12 @@ import { config } from "dotenv";
 
 config()
 
+console.log(
+  process.env.DB_HOST,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD
+)
+
 const knexConfig: Knex.Config = {
   client: "mysql2",
   connection: {
