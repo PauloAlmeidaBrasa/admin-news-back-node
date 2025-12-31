@@ -91,6 +91,7 @@ jobs:
           node-version: 18
           cache: npm
       
+
       # - name: NPM Install
       #   run: npm i
 
@@ -113,17 +114,35 @@ jobs:
       #   run: |
       #     npm run test
       #     npm run build
+      - name: NPM Install
+        run: npm i
 
-      - name: Deploy to STAGING
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd ${{ secrets.APP_PATH }}/staging
-            docker compose pull
-            docker compose up -d
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; do
+                echo "Waiting for MySQL..."
+                sleep 2
+              done
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build
+
+      # - name: Deploy to STAGING
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SERVER_IP }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd ${{ secrets.APP_PATH }}/staging
+      #       docker compose pull
+      #       docker compose up -d
 
   # -------------------------
   # PRODUCTION (TAG BASED)
