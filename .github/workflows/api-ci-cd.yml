@@ -47,9 +47,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # - name: Prepare env
-      #   run: cp .env.test .env
-
       - name: Wait for MySQL
         run: |
           until mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; do
@@ -94,19 +91,14 @@ jobs:
           node-version: 18
           cache: npm
       
-      - name: NPM Install
-        run: npm i
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Install dependencies
-        run: npm ci
 
-      - name: Prepare env
-        run: cp .env.test .env
-
-      - name: Test & Build
+      - name: Build & push image (staging)
         run: |
-          npm run test
-          npm run build
+          docker build -t paulodev183883/admin-news-back-node:staging .
+          docker push paulodev183883/admin-news-back-node:staging
 
       - name: Deploy to STAGING
         uses: appleboy/ssh-action@v1.0.3
