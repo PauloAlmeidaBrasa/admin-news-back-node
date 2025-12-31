@@ -91,9 +91,14 @@ jobs:
           node-version: 18
           cache: npm
       
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # - name: NPM Install
-      #   run: npm i
+
+      - name: Build & push image (staging)
+        run: |
+          docker build -t paulodev183883/admin-news-back-node:staging .
+          docker push paulodev183883/admin-news-back-node:staging
 
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
