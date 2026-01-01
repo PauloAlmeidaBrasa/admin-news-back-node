@@ -120,7 +120,7 @@ jobs:
           username: ${{ secrets.STAGING_SSH_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
-            cd ${{ secrets.STAGING_APP_PATH }}/staging
+            cd ${{ secrets.STAGING_APP_PATH }}
             docker compose pull admin-node-news-service
             docker compose -f docker-compose.yml -f docker-compose.staging.yml up admin-node-news-service
 
