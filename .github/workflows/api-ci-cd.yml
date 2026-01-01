@@ -103,16 +103,16 @@ jobs:
           docker build -t paulodev183883/admin-news-back-node:staging .
           docker push paulodev183883/admin-news-back-node:staging
 
-      # - name: Deploy to STAGING
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.SERVER_IP }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     script: |
-      #       cd ${{ secrets.APP_PATH }}/staging
-      #       docker compose pull
-      #       docker compose up -d
+      - name: Deploy to STAGING
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.STAGING_SERVER_IP }}
+          username: ${{ secrets.STAGING_SSH_USER }}
+          key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.STAGING_APP_PATH }}/staging
+            docker compose pull admin-node-news-service
+            docker compose -f docker-compose.yml -f docker-compose.staging.yml up admin-node-news-service
 
   # -------------------------
   # PRODUCTION (TAG BASED)
