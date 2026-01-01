@@ -105,11 +105,11 @@ jobs:
 
       - name: Debug secrets presence
         run: |
-          if [ -z "${{ secrets.APP_PATH }}" ]; then
-            echo "APP_PATH is EMPTY"
+          if [ -z "${{ secrets.STAGING_APP_PATH }}" ]; then
+            echo "STAGING_APP_PATH is EMPTY"
             exit 1
           else
-            echo "APP_PATH is SET"
+            echo "STAGING_APP_PATH is SET"
           fi
 
 
