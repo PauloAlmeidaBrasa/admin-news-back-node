@@ -103,6 +103,16 @@ jobs:
           docker build -t paulodev183883/admin-news-back-node:staging .
           docker push paulodev183883/admin-news-back-node:staging
 
+      - name: Debug secrets presence
+        run: |
+          if [ -z "${{ secrets.STAGING_APP_PATH }}" ]; then
+            echo "STAGING_APP_PATH is EMPTY"
+            exit 1
+          else
+            echo "STAGING_APP_PATH is SET"
+          fi
+
+
       - name: Deploy to STAGING
         uses: appleboy/ssh-action@v1.0.3
         with:
