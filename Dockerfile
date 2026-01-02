@@ -23,6 +23,7 @@
 
 
 # ---------- BUILD STAGE ----------
+# ---------- BUILD STAGE ----------
 FROM node:18 AS builder
 
 WORKDIR /app
@@ -31,7 +32,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build   # tsc runs HERE (CI, not EC2)
+RUN npm run build
 
 # ---------- RUNTIME STAGE ----------
 FROM node:18-alpine
@@ -40,9 +41,12 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+# Copy only compiled output
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
 COPY package*.json ./
+
+# Install ONLY production deps
+RUN npm ci --omit=dev
 
 CMD ["node", "dist/config/server.js"]
 
