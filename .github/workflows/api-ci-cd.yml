@@ -103,15 +103,6 @@ jobs:
           docker build -t paulodev183883/admin-news-back-node:staging .
           docker push paulodev183883/admin-news-back-node:staging
 
-      - name: Debug secrets presence
-        run: |
-          if [ -z "${{ secrets.STAGING_APP_PATH }}" ]; then
-            echo "STAGING_APP_PATH is EMPTY"
-            exit 1
-          else
-            echo "STAGING_APP_PATH is SET"
-          fi
-
 
       - name: Deploy to STAGING
         uses: appleboy/ssh-action@v1.0.3
@@ -120,9 +111,15 @@ jobs:
           username: ${{ secrets.STAGING_SSH_USER }}
           key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
           script: |
+            set -e
+
             cd ${{ secrets.STAGING_APP_PATH }}
             docker compose pull admin-node-news-service
-            docker compose -f docker-compose.yml -f docker-compose.staging.yml up admin-node-news-service
+
+            docker compose \
+              -f docker-compose.yml \
+              -f docker-compose.staging.yml \
+              up -d --no-deps --force-recreate admin-node-news-service
 
   # -------------------------
   # PRODUCTION (TAG BASED)
