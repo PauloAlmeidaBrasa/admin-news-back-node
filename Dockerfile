@@ -48,6 +48,6 @@ COPY package*.json ./
 # Install ONLY production deps
 RUN npm ci --omit=dev
 
-CMD ["node", "dist/config/server.js"]
+CMD ["node", "-r", "tsconfig-paths/register", "dist/config/server.js"]
 
 
