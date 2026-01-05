@@ -100,7 +100,7 @@ jobs:
 
       - name: Build & push image (staging)
         run: |
-          docker build -t paulodev183883/admin-news-back-node:staging .
+          docker build --no-cache -t paulodev183883/admin-news-back-node:staging .
           docker tag paulodev183883/admin-news-back-node:staging paulodev183883/admin-news-back-node:latest
 
           docker push paulodev183883/admin-news-back-node:staging
