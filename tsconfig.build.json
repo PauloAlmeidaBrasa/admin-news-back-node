@@ -1,17 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@config/*": ["dist/config/*"],
-      "@modules/*": ["dist/modules/*"],
-      "@utils/*": ["dist/utils/*"],
-      "@controllers/*": ["dist/controllers/*"],
-      "@routes/*": ["dist/routes/*"],
-      "@models/*": ["dist/models/*"],
-      "@services/*": ["dist/services/*"],
-      "@repositories/*": ["dist/repositories/*"],
-      "@contracts/*": ["dist/contracts/*"]
-    }
-  }
+    "outDir": "dist",
+    "rootDir": "src",
+    "sourceMap": false,
+    "declaration": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/tests", "**/*.test.ts", "**/*.spec.ts"]
 }
