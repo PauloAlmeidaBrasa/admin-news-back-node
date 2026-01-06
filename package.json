@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "NODE_ENV=dev tsx watch -r tsconfig-paths/register src/config/server.ts",
     "staging": "NODE_ENV=staging tsx watch -r tsconfig-paths/register src/config/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node ./dist/config/server.js",
     "knex": "knex --knexfile ./src/config/db/knexfile-migrations.ts",
     "migrate:make": "knex migrate:make --knexfile ./src/config/db/knexfile-migrations.ts",
     "migrate:latest": "knex migrate:latest --knexfile ./src/config/db/knexfile-migrations.ts",
