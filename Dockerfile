@@ -45,6 +45,7 @@ ENV NODE_ENV=production
 # Copy only compiled output
 COPY --from=builder /app/dist ./dist
 COPY package*.json ./
+COPY tsconfig.runtime.json ./tsconfig.json
 
 # Install ONLY production deps
 RUN npm ci --omit=dev
