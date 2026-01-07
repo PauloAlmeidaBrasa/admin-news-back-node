@@ -132,6 +132,8 @@ jobs:
             
             echo "Running migrations..."
               docker compose exec -T admin-node-news-service npm run migrate:latest-staging
+            echo "Running seeds..."
+              docker compose exec -T admin-node-news-service npm run seed:run-staging
 
   # -------------------------
   # PRODUCTION (TAG BASED)
