@@ -129,6 +129,9 @@ jobs:
               -f docker-compose.yml \
               -f docker-compose.staging.yml \
               up -d --no-deps --force-recreate admin-node-news-service
+            
+            echo "Running migrations..."
+              docker exec -it news-orchestrator-admin-node-news-service-1 sh npm run migrate
 
   # -------------------------
   # PRODUCTION (TAG BASED)
