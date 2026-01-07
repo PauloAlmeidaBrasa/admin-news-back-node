@@ -131,7 +131,7 @@ jobs:
               up -d --no-deps --force-recreate admin-node-news-service
             
             echo "Running migrations..."
-              docker compose exec -T admin-node-news-service npm run migrate
+              docker compose exec -T admin-node-news-service npm run migrate:latest-staging
 
   # -------------------------
   # PRODUCTION (TAG BASED)
