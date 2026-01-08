@@ -43,7 +43,7 @@ export class AuthenticationService  {
 
     return {
       access_token: token,
-      expiresIn: '1d',
+      expiresIn: '2d',
       user: {
         id: user.id,
         email: user.email,
