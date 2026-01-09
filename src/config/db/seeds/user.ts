@@ -2,6 +2,10 @@ import { Knex } from "knex";
 import bcrypt from "bcrypt";
 
 export async function seed(knex: Knex): Promise<void> {
+    if (process.env.APP_ENV === 'production') {
+      throw new Error('🚫 Seeding is disabled in production');
+    }
+
     // Deletes ALL existing entries
     await knex("users").del();
 

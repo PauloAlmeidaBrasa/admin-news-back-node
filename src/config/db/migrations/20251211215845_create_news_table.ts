@@ -27,5 +27,8 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
+  if (process.env.APP_ENV === 'production') {
+    throw new Error('🚫 Rollbacks are disabled in production');
+  }
   return knex.schema.dropTableIfExists("news");
 }

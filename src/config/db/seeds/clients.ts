@@ -1,6 +1,9 @@
 import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
+    if (process.env.APP_ENV === 'production') {
+      throw new Error('🚫 Seeding is disabled in production');
+    }
     // Deletes ALL existing entries
     await knex("client").del();
 
