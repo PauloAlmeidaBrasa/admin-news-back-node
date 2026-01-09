@@ -182,6 +182,13 @@ jobs:
           script: |
             set -e
             cd ${{ secrets.PROD_APP_PATH }}
+
+            echo "Stopping service..."
+            docker compose stop admin-node-news-service || true
+
+            echo "Removing old image..."
+            docker image rm -f paulodev183883/admin-news-back-node:latest || true
+
             docker compose \
               -f docker-compose.yml \
               -f docker-compose.prod.yml \
