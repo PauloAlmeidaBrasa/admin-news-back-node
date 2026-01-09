@@ -18,7 +18,9 @@ jobs:
   # CI – PR validation
   # -------------------------
   ci:
-    if: github.event_name == 'pull_request'
+    if: |
+      github.event_name == 'pull_request' ||
+      startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
 
     services:
@@ -180,7 +182,15 @@ jobs:
           script: |
             set -e
             cd ${{ secrets.PROD_APP_PATH }}
+
+            echo "Stopping service..."
+            docker compose stop admin-node-news-service || true
+
+            echo "Removing old image..."
+            docker image rm -f paulodev183883/admin-news-back-node:latest || true
+
             docker compose \
               -f docker-compose.yml \
               -f docker-compose.prod.yml \
+              --env-file .env.prod \
               up -d --no-deps --force-recreate admin-node-news-service
