@@ -18,7 +18,9 @@ jobs:
   # CI – PR validation
   # -------------------------
   ci:
-    if: github.event_name == 'pull_request'
+    if: |
+      github.event_name == 'pull_request' ||
+      startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
 
     services:
