@@ -132,10 +132,13 @@ jobs:
               -f docker-compose.staging.yml \
               up -d --no-deps --force-recreate admin-node-news-service
             
+            echo "Waiting for container to stabilize..."
+            sleep 10
+
             echo "Running migrations..."
-              docker compose exec -T admin-node-news-service npm run migrate:latest-staging
+            docker compose exec -T admin-node-news-service npm run migrate:latest-staging
             echo "Running seeds..."
-              docker compose exec -T admin-node-news-service npm run seed:run-staging
+            docker compose exec -T admin-node-news-service npm run seed:run-staging
 
   # -------------------------
   # PRODUCTION (TAG BASED)
