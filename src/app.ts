@@ -8,7 +8,7 @@ import { Knex } from "knex";
 export const createApp = (db: Knex) => {
   const app = express();
 
-  console.log('testing pipeline')
+  console.log('testing pipeline ')
 
   /// console.log("🧪 DB IN APPLICATION:", db);
 
