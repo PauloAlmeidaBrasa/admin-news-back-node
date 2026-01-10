@@ -130,7 +130,7 @@ jobs:
             docker compose \
               -f docker-compose.yml \
               -f docker-compose.staging.yml \
-              up -d --no-deps --force-recreate admin-node-news-service
+              up -d --force-recreate admin-node-news-service
             
             echo "Waiting for container to stabilize..."
             sleep 10
