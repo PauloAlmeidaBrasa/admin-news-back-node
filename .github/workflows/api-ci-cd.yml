@@ -196,4 +196,4 @@ jobs:
               -f docker-compose.yml \
               -f docker-compose.prod.yml \
               --env-file .env.prod \
-              up -d --no-deps --force-recreate admin-node-news-service
+              up -d --force-recreate admin-node-news-service
