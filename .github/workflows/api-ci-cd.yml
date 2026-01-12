@@ -197,3 +197,6 @@ jobs:
               -f docker-compose.prod.yml \
               --env-file .env.prod \
               up -d --force-recreate admin-node-news-service
+
+            echo "Running migrations..."
+            docker compose exec -T admin-node-news-service npm run migrate:latest-prod
