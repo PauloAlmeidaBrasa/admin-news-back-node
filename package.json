@@ -13,6 +13,8 @@
     "migrate:rollback": "knex migrate:rollback --knexfile ./src/config/db/knexfile-migrations.ts",
     "migrate:latest-staging": "knex migrate:latest --knexfile ./dist/config/db/knexfile-migrations.js",
     "migrate:rollback-staging": "knex migrate:rollback --knexfile ./dist/config/db/knexfile-migrations.js",
+    "migrate:latest-prod": "knex migrate:latest --knexfile ./dist/config/db/knexfile-migrations.js",
+    "migrate:rollback-prod": "knex migrate:rollback --knexfile ./dist/config/db/knexfile-migrations.js",
     "seed:run-staging": "knex seed:run --knexfile ./dist/config/db/knexfile-migrations.js",
     "seed:run": "knex seed:run --knexfile ./src/config/db/knexfile-migrations.ts",
     "seed:make": "knex seed:make --knexfile ./src/config/db/knexfile-migrations.ts",
