@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.test" });
 
-console.log("🧪 Running tests with DB:", process.env.DB_NAME);
-// console.log("🧪 Running USER DB:",process.env.DB_USER)
+if (process.env.CI) {
+  dotenv.config({ path: ".env.tests-pipeline", override: true });
+} else {
+  dotenv.config({ path: ".env.test", override: true });
+}
