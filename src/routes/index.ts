@@ -1,9 +1,12 @@
 import { Router } from "express";
-import userRoutes  from "@routes/userRouter"
+import { 
+  userRoutes,
+  clientRoutes
+ } from "@routes/modulesRoutes";
 import authenticationRoutes from "@routes/authenticationRouter"
 import { authMiddleware } from "middleware/authMiddleware"
 import { Knex } from "knex";
-import docRoutes from "@routes/docRouter";
+import docRoutes from "./docRouter";
 
 
 const registerRouter = (db: Knex) => {
@@ -16,6 +19,7 @@ const registerRouter = (db: Knex) => {
 
 
   router.use(`/${API_VERSION}`,authMiddleware,userRoutes(db)) //auth routes
+  router.use(`/${API_VERSION}`,authMiddleware,clientRoutes(db))
 
 
 
