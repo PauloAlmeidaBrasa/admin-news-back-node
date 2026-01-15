@@ -1,6 +1,6 @@
 // src/modules/user/user.service.ts
 import bcrypt from "bcrypt";
-import { UserRepository } from "@repositories/UserRepository";
+import { UserRepository } from "@repositories/user/UserRepository";
 import { GetByIdDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO"
 import { CreateUseRequest,} from "contracts/user/userContractsRequest";
 import { Knex } from "knex";

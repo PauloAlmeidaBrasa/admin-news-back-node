@@ -1,7 +1,7 @@
 // src/modules/user/user.controller.ts
 import { Request, Response } from "express";
 import { UserService } from "@services/user/UserService";
-import { UserRepository } from "@repositories/UserRepository";
+import { UserRepository } from "@repositories/user/UserRepository";
 import { UserRequestHandler } from "./userRequestHandler";
 // import { UserResponseHandler } from "./userResponseHandler";
 import { CreateUserResponse, GetUserByIdResponse } from "contracts/user/userContractsRequest"

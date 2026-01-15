@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { UserRepository } from "@repositories/UserRepository";
+import { UserRepository } from "@repositories/user/UserRepository";
 import { signJwt } from "@utils/jwt";
 import { JwtUserPayload, JwtUserResponse } from "@contracts/jwt";
 

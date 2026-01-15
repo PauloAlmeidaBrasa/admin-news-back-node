@@ -9,7 +9,7 @@ const clientRoutes = (db: Knex) => {
   const controller = new ClientController(db);
 
   router.get("/client", controller.index)
-//   router.get("/client/:id", controller.getById);
+  router.get("/client/:id", controller.getById);
 //   router.post("/client/create", controller.store)
 //   router.patch("/client/update/:id", controller.update)
 //   router.post("/client/delete/:id", controller.delete)

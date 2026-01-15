@@ -10,7 +10,7 @@ export abstract class BaseRepository<T> {
 
   async findAll(clientId:number) {
     try {
-      return await this.db(this.tableName).select("*").where({client_id: clientId});
+      return await this.db(this.tableName).select("*").where({id: clientId});
     } catch (error) {
       throw this.handleError(error, "findAll");
     }

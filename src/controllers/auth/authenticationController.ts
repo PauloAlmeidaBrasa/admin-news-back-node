@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthenticationService  } from "@services/authenticationService";
-import { UserRepository } from "@repositories/UserRepository";
+import { UserRepository } from "@repositories/user/UserRepository";
 import { AuthRequestHandler } from "./authRequestHandler";
 import { Knex } from "knex";
 
