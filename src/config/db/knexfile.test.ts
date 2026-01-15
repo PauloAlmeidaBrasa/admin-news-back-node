@@ -1,15 +1,13 @@
 
-// import dotenv from "dotenv";
-// dotenv.config({path:'.env.test'});
 
 const knexTestConfig = {
   client: "mysql2",
   connection: {
-    host: "127.0.0.1",
+    host: process.env.DB_HOST,
     port: 3306,
-    user: "root",
-    password: "root",
-    database: "news_back_test_db",
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     connectTimeout: 5000
   },
   pool: { min: 2, max: 10 },
