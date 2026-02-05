@@ -5,11 +5,15 @@ import {
   UsersAllSchema, 
   UserUpdateSchema 
 } from "./userSchema";
+import 
+{ ClientAllSchema } from "./clientSchema"
+
 
 export const schemas = {
   UserById: UserByIdSchema,
   UserAll: UsersAllSchema,
   UserCreate: UserCreateSchema,
   UserUpdate: UserUpdateSchema,
-  DeleteUser: UserDeleteSchema
+  DeleteUser: UserDeleteSchema,
+  ClientAll: ClientAllSchema
 };

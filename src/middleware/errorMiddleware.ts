@@ -13,7 +13,8 @@ export function errorHandler(
     'ERR_ASSERTION',
     'REPOSITORY_ERROR',
     'ER_NO_TABLES_USED',
-    'ER_NO_DEFAULT_FOR_FIELD'
+    'ER_NO_DEFAULT_FOR_FIELD',
+    'ER_NO_SUCH_TABLE'
   ]
 
   // Default values
