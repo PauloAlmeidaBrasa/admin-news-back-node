@@ -10,8 +10,8 @@ export class UserService {
 
   private userRepository: UserRepository;
 
-  constructor(db: Knex, userRepository: UserRepository) {
-    this.userRepository = new UserRepository(db)
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository
   }
 
 

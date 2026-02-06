@@ -9,7 +9,7 @@ export class ClientService {
   private clientRepository: ClientRepository;
 
   constructor(db: Knex, userRepository: ClientRepository) {
-    this.clientRepository = new ClientRepository(db)
+    this.clientRepository = userRepository
   }
 
 

@@ -14,7 +14,7 @@ export default class UserController {
   
   constructor(db: Knex) {
     const userRepository = new UserRepository(db);
-    this.userService = new UserService(db,userRepository);
+    this.userService = new UserService(userRepository);
   }
 
   /**
