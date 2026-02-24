@@ -18,3 +18,7 @@ export interface GetUserByIdResponse {
     clientId: number
   }
 }
+export interface CreateResponse {
+  success: boolean;
+  message: string;
+}

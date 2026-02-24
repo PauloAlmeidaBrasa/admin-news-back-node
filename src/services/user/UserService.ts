@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/user/UserRepository";
 import { GetByIdDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO"
 import { CreateUseRequest,} from "contracts/user/userContractsRequest";
-import { Knex } from "knex";
 
 
 export class UserService {

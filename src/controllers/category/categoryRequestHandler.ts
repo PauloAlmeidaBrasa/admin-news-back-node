@@ -13,17 +13,8 @@ export class CategoryRequestHandler {
 
   static validateToCreate(params: UserReqStore): UserValidateResponse{
 
-    if(!params.name || !string(params.name) ) {
+    if((!params) || !string(params.name) ) {
       return { error: true, message: 'name missing'}
-    }
-    if (!params.email) {
-      return { error: true, message: 'email missing'}
-    }
-    if(!generalUtils.parseEmail(params.email)) {
-      return { error: true, message: 'email bad format'}
-    }
-    if (!params.password) {
-      return { error: true, message: 'password missing'}
     }
 
     return { error: false, message: ''}

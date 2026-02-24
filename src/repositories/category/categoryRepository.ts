@@ -1,5 +1,6 @@
 import { BaseRepository } from "../BaseRepository";
 import { Knex } from "knex";
+import { CreateDTO } from "contracts/categories/categoryContractDTO";
 
 export class CategoryRepository extends BaseRepository<any> {
   constructor(db: Knex) {
@@ -12,5 +13,9 @@ export class CategoryRepository extends BaseRepository<any> {
     } catch (error) {
       throw this.handleError(error, "allCategories");
     }
+  }
+  async createCategory(data: Partial<CreateDTO>): Promise<number> {
+      const user = this.create(data)
+      return user;
   }
 }
