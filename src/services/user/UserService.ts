@@ -3,15 +3,14 @@ import bcrypt from "bcrypt";
 import { UserRepository } from "@repositories/user/UserRepository";
 import { GetByIdDTO, GetAllDTO, UserDTO } from "contracts/user/userContractsDTO"
 import { CreateUseRequest,} from "contracts/user/userContractsRequest";
-import { Knex } from "knex";
 
 
 export class UserService {
 
   private userRepository: UserRepository;
 
-  constructor(db: Knex, userRepository: UserRepository) {
-    this.userRepository = new UserRepository(db)
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository
   }
 
 
