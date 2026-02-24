@@ -9,10 +9,10 @@ const categoryRoutes = (db: Knex) => {
   const controller = new CategoryController(db);
 
   router.get("/categories", controller.index)
-//   router.get("/client/:id", controller.getById);
+  router.get("/category/:id", controller.getById);
   router.post("/category/add-category", controller.store)
-//   router.patch("/client/update/:id", controller.update)
-//   router.post("/client/delete/:id", controller.delete)
+  router.patch("/category/update/:id", controller.update)
+  router.post("/category/delete/:id", controller.delete)
 
   return router;
 };

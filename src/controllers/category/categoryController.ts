@@ -20,21 +20,21 @@ export default class CategoryController {
 
   /**
  * @openapi
- * /client/:
+ * /categories/:
  *   get:
  *     tags:
- *       - Client
- *     summary: List clients 
+ *       - Category
+ *     summary: List category 
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *     responses:
  *       200:
- *         description: All clients 
+ *         description: All category 
  *         content:
  *           application/json:
  *             schema:  
- *               $ref: '#/components/schemas/ClientAll'
+ *               $ref: '#/components/schemas/CategoryAllSchema'
  *       500:
  *         description: Internal server error
  */
@@ -47,11 +47,11 @@ export default class CategoryController {
 
 /**
  * @openapi
- * /client/{id}:
+ * /category/{id}:
  *   get:
  *     tags:
- *       - Client
- *     summary: Get client by ID
+ *       - Category
+ *     summary: Get category by ID
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -62,52 +62,48 @@ export default class CategoryController {
  *           type: integer
  *     responses:
  *       200:
- *         description: Client found
+ *         description: Category found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/UserById'
+ *               $ref: '#/components/schemas/CategoryById'
  *       404:
- *         description: Client not found
+ *         description: Category not found
  */
   getById = async (req: Request, res: Response) => {
 
-    // console.log(req.params)
-    // const requesValidate = CategoryRequestHandler.validateToGetById(req.params.id)
-    // if(requesValidate.error) {
-    //   throw new Error(`category error: ${requesValidate.message}`)
-    // }
-    // const client = await this.category.getClientById(Number(req.params.id))
+    const requesValidate = CategoryRequestHandler.validateToGetById(req.params.id)
+    if(requesValidate.error) {
+      throw new Error(`category error: ${requesValidate.message}`)
+    }
+    const category = await this.categoryService.getCategoryById(Number(req.params.id))
+    console.log(category)
 
-    // const response: GetClientByIdResponse = {
-    //   success: true,
-    //   data: {
-    //     name: client.name,
-    //     address: client.address
-    //   }
-    // };
-
-    // res.status(200).json(response)
+    return ApiResponse.success(res, 'category', category);
   }
 
 /**
  * @openapi
- * /client/create:
+ * /category/add-category:
  *   post:
  *     tags:
- *       - User
- *     summary: Create client
+ *       - Category
+ *     summary: Create category
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UserCreate'
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *      - in: path
+ *        name: description
+ *        required: false   
+ *        schema: string
  *     responses:
  *       201:
- *         description: client created
+ *         description: category created
  *         content:
  *           application/json:
  *             schema:
@@ -143,11 +139,11 @@ export default class CategoryController {
   
 /**
  * @openapi
- * /client/update/{id}:
+ * /category/update/{id}:
  *   patch:
  *     tags:
- *       - client
- *     summary: Update client data
+ *       - Category
+ *     summary: Update category data
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -158,38 +154,44 @@ export default class CategoryController {
  *           type: integer
  *     responses:
  *       200:
- *         description: client updated
+ *         description: Category updated
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ClientUpdate'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
  *       404:
- *         description: client not found
+ *         description: Category not found
  *       500:
  *         description: Internal server error
  */
-//   update = async (req: Request, res: Response) => {
+    update = async (req: Request, res: Response) => {
 
-//     const requesValidate = CategoryRequestHandler.validateToUpdate(req.params.id)
-//     if(requesValidate.error) {
-//       throw new Error(`User error: ${requesValidate.message}`)
-//     }
+      const requesValidate = CategoryRequestHandler.validateToUpdate(req.params.id,req.body)
+      if(requesValidate.error) {
+        throw new Error(`User error: ${requesValidate.message}`)
+      }
 
-//     const userId = Number(req.params.id)
-//     const fieldsUpdate = req.body
+      const userId = Number(req.params.id)
+      const fieldsUpdate = req.body
 
-//     await this.userService.update(userId,fieldsUpdate);
-//     res.json({ message: "Updated successfully" });
-//   }
+      await this.categoryService.update(userId,fieldsUpdate);
+      return ApiResponse.message(res, "Category updated successfully");
+
+    }
 
     
 /**
  * @openapi
- * /client/delete/{id}:
+ * /category/delete/{id}:
  *   post:
  *     tags:
- *       - client
- *     summary: Delete client
+ *       - Category
+ *     summary: Delete category
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -200,27 +202,32 @@ export default class CategoryController {
  *           type: integer
  *     responses:
  *       200:
- *         description: client deleted
+ *         description: Category deleted
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Deleteclient'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
  *       404:
- *         description: user not found
+ *         description: Category not found
  *       500:
  *         description: Internal server error
  */
 
-//   delete = async (req: Request, res: Response) => {
-//     try {
-//       const requesValidate = CategoryRequestHandler.validateToDelete(req.params.id)
-//       if(requesValidate.error) {
-//         throw new Error(`client error: ${requesValidate.message}`)
-//       }
-//       await this.userService.deleteUser(Number(req.params.id));
-//       res.json({ message: "Deleted successfully" });
-//     } catch (err: any) {
-//       res.status(400).json({ message: err.message });
-//     }
-//   }
+  delete = async (req: Request, res: Response) => {
+    try {
+      const requesValidate = CategoryRequestHandler.validateToDelete(req.params.id)
+      if(requesValidate.error) {
+        throw new Error(`Category error: ${requesValidate.message}`)
+      }
+      await this.categoryService.deleteCategory(Number(req.params.id));
+      ApiResponse.message(res, "Category deleted successfully");
+    } catch (err: any) {
+      ApiResponse.error(res, err.message || "Error deleting category");
+    }
+  }
 }
