@@ -2,7 +2,8 @@ import { Router } from "express";
 import { 
   userRoutes,
   clientRoutes,
-  categoryRoutes
+  categoryRoutes,
+  newsRoutes
  } from "@routes/modulesRoutes";
 import authenticationRoutes from "@routes/authenticationRouter"
 import { authMiddleware } from "middleware/authMiddleware"
@@ -22,6 +23,13 @@ const registerRouter = (db: Knex) => {
   // router.use(`/${API_VERSION}`,authMiddleware,userRoutes(db)) //auth routes
   // router.use(`/${API_VERSION}`,authMiddleware,clientRoutes(db))
   router.use(`/${API_VERSION}`,authMiddleware,categoryRoutes(db))
+  router.use(`/${API_VERSION}`,authMiddleware,newsRoutes(db))
+
+
+
+  // router.get('/arr', (req, res) => {
+  //   res.json({ message: "Welcome to the News Orchestrator API" });
+  // })
 
 
 
